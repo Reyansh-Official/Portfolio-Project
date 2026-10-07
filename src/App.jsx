@@ -9,19 +9,38 @@ const techStack = [
   },
   {
     group: 'Frameworks',
-    items: ['React', 'FastAPI'],
+    items: ['React', 'Next.js', 'FastAPI'],
   },
   {
     group: 'Tools & Technologies',
-    items: ['PostgreSQL', 'Supabase', 'Pandas', 'Git', 'GitHub'],
+    items: ['PostgreSQL', 'Supabase', 'AWS', 'Pandas', 'Git', 'GitHub'],
   },
+]
+
+const courses = [
+  'Object-Oriented Programming',
+  'Data Structures',
+  'Algorithms',
+  'Machine Learning',
+  'Linear Algebra',
+  'Probability & Statistics',
+]
+
+const educationStats = [
+  { label: 'GPA', value: '3.9 / 4.0', highlight: true, meter: 3.9 / 4 },
+  { label: 'Honors', value: "President's & Dean's List" },
+  { label: 'Graduating', value: 'December 2027' },
+  { label: 'Leadership', value: 'Finance Chair, Indian Student Association', wide: true },
 ]
 
 const projects = [
   {
     title: 'B.A.R.S.',
     subtitle: 'Bill Accessibility & Relief System',
-    featured: true,
+    badge: 'Best in Health · hackUMBC 2026',
+    sticker: { rank: '2nd', label: 'Overall hackUMBC' },
+    summary:
+      'Turns a photo of a hospital bill into a complete, policy-screened financial assistance application in English or Spanish.',
     bullets: [
       'Won 2nd Overall and Best in Health Track at hackUMBC 2026 as a team of 4 with a full-stack platform that turns a photo of a hospital bill into a complete financial assistance application in English or Spanish.',
       "Engineered a deterministic rules engine that screens eligibility against each hospital's published policy (income bands, presumptive programs, Medicaid limits), citing the source policy page for every result and backed by 45 unit tests.",
@@ -33,7 +52,10 @@ const projects = [
   },
   {
     title: 'Campusly',
-    featured: true,
+    subtitle: 'Verified Social Network for UMBC',
+    badge: '100+ users on day one · Bitcamp 2026',
+    summary:
+      'A students-only campus network with live feeds, DMs, media sharing, and a Study Buddy matcher built on real-time Supabase.',
     bullets: [
       'Gained 100+ users within the first day of launch at Bitcamp 2026 as a team of 4.',
       'Verified UMBC students with .edu email OTP authentication and segmented users into the UMBC community by email domain.',
@@ -47,9 +69,9 @@ const projects = [
 ]
 
 const contactLinks = [
-  { label: 'Email', href: 'mailto:reyatt30@gmail.com' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/reyansh-attavar/' },
-  { label: 'GitHub', href: 'https://github.com/Reyansh-Official' },
+  { label: 'Email', handle: 'reyatt30@gmail.com', href: 'mailto:reyatt30@gmail.com' },
+  { label: 'LinkedIn', handle: 'in/reyansh-attavar', href: 'https://www.linkedin.com/in/reyansh-attavar/' },
+  { label: 'GitHub', handle: '@Reyansh-Official', href: 'https://github.com/Reyansh-Official' },
 ]
 
 const portfolioSections = [
@@ -58,6 +80,15 @@ const portfolioSections = [
   { number: '03', label: 'Tools', href: '#skills' },
   { number: '04', label: 'Work', href: '#projects' },
   { number: '05', label: 'Contact', href: '#contact' },
+]
+
+const marqueeItems = [
+  'Full-Stack Engineering',
+  'Backend Systems',
+  'Databases',
+  '2nd Overall · hackUMBC 2026',
+  '100+ Users Day One · Bitcamp 2026',
+  "President's List",
 ]
 
 const contactCode = `if success() == True:
@@ -134,9 +165,28 @@ function TechLogo({ name }) {
     SQL: 'SQL',
     FastAPI: 'API',
     Pandas: 'PD',
+    AWS: 'AWS',
+    'Next.js': 'N',
   }
 
   return <span className="logo-initials">{initials[name] ?? name.slice(0, 2)}</span>
+}
+
+function ContactIcon({ name }) {
+  if (name === 'Email') {
+    return (
+      <svg viewBox="0 0 48 48">
+        <rect x="7" y="12" width="34" height="24" fill="none" />
+        <path d="m8 13 16 13 16-13" fill="none" />
+      </svg>
+    )
+  }
+
+  if (name === 'LinkedIn') {
+    return <span className="contact-icon-text">in</span>
+  }
+
+  return <TechLogo name={name} />
 }
 
 function App() {
@@ -241,6 +291,10 @@ function App() {
 
       <section className="intro-section" id="home">
         <div className="intro-panel">
+          <p className="intro-eyebrow">
+            <span className="status-dot" aria-hidden="true" />
+            Software Engineer · CS @ UMBC
+          </p>
           <h1>
             Reyansh
             <span>Attavar</span>
@@ -251,49 +305,79 @@ function App() {
                 Software engineer focused on building reliable web experiences,
                 scalable backend systems, and well-structured databases.
               </p>
-              <span>Ellicott City, MD</span>
+            </div>
+            <div className="intro-actions">
+              <a className="primary-action" href="#projects">
+                View Projects
+              </a>
+              <a className="secondary-action" href="#contact">
+                Get In Touch
+              </a>
             </div>
           </div>
         </div>
-        <figure className="profile-portrait">
-          <img src={profilePortrait} alt="Portrait of Reyansh Attavar" />
-        </figure>
+        <div className="portrait-stage">
+          <figure className="profile-portrait">
+            <div className="portrait-crop">
+              <img src={profilePortrait} alt="Portrait of Reyansh Attavar" />
+            </div>
+            <figcaption>Ellicott City, MD</figcaption>
+          </figure>
+        </div>
+        <div className="intro-marquee" aria-hidden="true">
+          <div className="marquee-track">
+            {[0, 1].map((copy) => (
+              <span key={copy}>
+                {marqueeItems.map((item) => (
+                  <span key={item}>
+                    {item}
+                    <b>✦</b>
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="portfolio-section scroll-reveal" id="education">
         <div className="section-layout education-grid">
-          <h2>Academic Foundation</h2>
-          <div className="section-body">
-            <div className="education-card-heading">
-              <div>
+          <h2><span className="section-number">02</span>Academic Foundation</h2>
+          <div className="education-layout">
+            <article className="section-body school-card">
+              <div className="school-card-bar">
+                <span>Student Record</span>
+                <span>Class of 2027</span>
+              </div>
+              <div className="education-card-heading">
                 <h3>University of Maryland, Baltimore County</h3>
                 <p className="degree-line">B.S. in Computer Science</p>
               </div>
               <div className="education-meta">
-                <span>August 2024 - December 2027</span>
+                <span>Aug 2024 – Dec 2027</span>
                 <span>Catonsville, MD</span>
               </div>
-            </div>
-            <dl className="education-list">
-              <div>
-                <dt>Relevant Courses</dt>
-                <dd>
-                  Computing in Python, Object-Oriented Programming, Data
-                  Structures, Linear Algebra, Probability and Statistics
-                </dd>
+              <div className="course-block">
+                <h4>Relevant Courses</h4>
+                <ul className="course-list">
+                  {courses.map((course) => (
+                    <li key={course}>{course}</li>
+                  ))}
+                </ul>
               </div>
-              <div>
-                <dt>Honors</dt>
-                <dd>President&apos;s List and Dean&apos;s List</dd>
-              </div>
-              <div>
-                <dt>Activities / Societies</dt>
-                <dd>Indian Student Association, Finance Chair</dd>
-              </div>
-              <div>
-                <dt>GPA</dt>
-                <dd>3.9 / 4.0</dd>
-              </div>
+            </article>
+            <dl className="stat-grid">
+              {educationStats.map((stat) => (
+                <div className={`stat-tile${stat.highlight ? ' stat-highlight' : ''}${stat.wide ? ' stat-wide' : ''}`} key={stat.label}>
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
+                  {stat.meter && (
+                    <span className="stat-meter" aria-hidden="true">
+                      <span style={{ width: `${stat.meter * 100}%` }} />
+                    </span>
+                  )}
+                </div>
+              ))}
             </dl>
           </div>
         </div>
@@ -301,7 +385,7 @@ function App() {
 
       <section className="portfolio-section scroll-reveal" id="skills">
         <div className="section-layout skills-grid">
-          <h2>Tools I Use To Build</h2>
+          <h2><span className="section-number">03</span>Tools I Use To Build</h2>
           <div className="stack-board">
             {techStack.map((stack) => (
               <article className="stack-group" key={stack.group}>
@@ -324,30 +408,40 @@ function App() {
 
       <section className="portfolio-section scroll-reveal" id="projects">
         <div className="section-layout projects-grid">
-          <h2>Projects</h2>
+          <h2><span className="section-number">04</span>Projects</h2>
           <div className="project-list">
-            {projects.map((project) => (
-              <article className={project.featured ? 'project-card featured-project' : 'project-card'} key={project.title}>
+            {projects.map((project, index) => (
+              <article className="project-card" key={project.title}>
+                {project.sticker && (
+                  <div className="project-sticker">
+                    <strong>{project.sticker.rank}</strong>
+                    <span>{project.sticker.label}</span>
+                  </div>
+                )}
+                <span className="project-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <div className="project-heading">
+                  {project.badge && <span className="project-badge">{project.badge}</span>}
                   <h3>{project.title}</h3>
                   {project.subtitle && <p className="project-subtitle">{project.subtitle}</p>}
                 </div>
-                <div className="project-details">
-                  {project.bullets ? (
+                <p className="project-summary">{project.summary}</p>
+                <ul className="project-tech" aria-label={`${project.title} tech stack`}>
+                  {project.tech.map((tech) => (
+                    <li key={tech}>{tech}</li>
+                  ))}
+                </ul>
+                {project.bullets && (
+                  <details className="project-more">
+                    <summary>Details</summary>
                     <ul className="project-bullets">
                       {project.bullets.map((bullet) => (
                         <li key={bullet}>{bullet}</li>
                       ))}
                     </ul>
-                  ) : (
-                    <p>{project.description}</p>
-                  )}
-                  <ul className="project-tech" aria-label={`${project.title} tech stack`}>
-                    {project.tech.map((tech) => (
-                      <li key={tech}>{tech}</li>
-                    ))}
-                  </ul>
-                </div>
+                  </details>
+                )}
               </article>
             ))}
           </div>
@@ -355,30 +449,69 @@ function App() {
       </section>
 
       <section className="contact-section scroll-reveal" id="contact">
-        <h2>
-          Building Work
-          <span>That Matters</span>
-        </h2>
-        <p>
-          I care about building software that solves real problems, connects
-          people, and turns ideas into systems that last.
-        </p>
-        <figure className="code-quote">
-          <pre>
-            <code className="typing-code" aria-label="if success equals true, celebrate. while success equals false, try again and be awesome.">
-              {typedContactCode}
-              <span className="typing-cursor" aria-hidden="true" />
-            </code>
-          </pre>
-        </figure>
-        <div className="contact-links">
-          {contactLinks.map((link) => (
-            <a href={link.href} key={link.label} target="_blank" rel="noreferrer">
-              {link.label}
-            </a>
-          ))}
+        <div className="contact-layout">
+          <div className="contact-copy">
+            <p className="contact-eyebrow">
+              <span className="section-number">05</span>
+              Let&apos;s Connect
+            </p>
+            <h2>
+              Building Work
+              <span>That Matters</span>
+            </h2>
+            <p className="contact-lede">
+              I care about building software that solves real problems, connects
+              people, and turns ideas into systems that last.
+            </p>
+          </div>
+          <figure className="code-quote">
+            <div className="terminal-bar" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <b>motto.py</b>
+            </div>
+            <pre>
+              <code className="typing-code" aria-label="if success equals true, celebrate. while success equals false, try again and be awesome.">
+                {typedContactCode}
+                <span className="typing-cursor" aria-hidden="true" />
+              </code>
+            </pre>
+          </figure>
         </div>
+        <ul className="contact-cards">
+          {contactLinks.map((link) => {
+            const isEmail = link.href.startsWith('mailto:')
+
+            return (
+              <li key={link.label}>
+                <a
+                  className="contact-card"
+                  href={link.href}
+                  {...(isEmail ? {} : { target: '_blank', rel: 'noreferrer' })}
+                >
+                  <span className="contact-card-icon" aria-hidden="true">
+                    <ContactIcon name={link.label} />
+                  </span>
+                  <span className="contact-card-text">
+                    <span className="contact-card-label">{link.label}</span>
+                    <span className="contact-card-handle">{link.handle}</span>
+                  </span>
+                  <span className="contact-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
       </section>
+
+      <footer className="site-footer">
+        <span>© {new Date().getFullYear()} Reyansh Attavar</span>
+        <span>Built with React &amp; Vite</span>
+        <a href="#home">Back to top ↑</a>
+      </footer>
     </main>
   )
 }
