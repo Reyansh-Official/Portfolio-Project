@@ -509,6 +509,13 @@
   grid-template-columns: minmax(340px, 0.36fr) minmax(0, 1fr);
 }
 
+.project-card .project-subtitle {
+  margin-top: 14px;
+  font-size: clamp(15px, 1vw, 18px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .project-details {
   display: grid;
   gap: 26px;

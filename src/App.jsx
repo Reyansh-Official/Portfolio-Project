@@ -19,6 +19,19 @@ const techStack = [
 
 const projects = [
   {
+    title: 'B.A.R.S.',
+    subtitle: 'Bill Accessibility & Relief System',
+    featured: true,
+    bullets: [
+      'Won 2nd Overall and Best in Health Track at hackUMBC 2026 as a team of 4 with a full-stack platform that turns a photo of a hospital bill into a complete financial assistance application in English or Spanish.',
+      "Engineered a deterministic rules engine that screens eligibility against each hospital's published policy (income bands, presumptive programs, Medicaid limits), citing the source policy page for every result and backed by 45 unit tests.",
+      "Automated hospital onboarding with an AI pipeline that discovers a hospital's assistance policy via web search, extracts it into structured JSON, and validates it against Maryland legal minimums and federal poverty guidelines, onboarding UMMS, Johns Hopkins, and MedStar at about $0.40 per hospital.",
+      "Architected the backend on Supabase PostgreSQL with row-level security isolating each hospital's data, AES-256 encryption of patient contact details, hashed private access links, and phone verification via one-time codes.",
+      'Developed a policy-grounded chat with page citations, AI pre-checks of uploaded documents, SMS deadline reminders with a deduplicated scheduling engine, and a counselor dashboard with identity checks and impact metrics.',
+    ],
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Claude API', 'Row-Level Security', 'AES-256', 'SMS / OTP'],
+  },
+  {
     title: 'Campusly',
     featured: true,
     bullets: [
@@ -30,12 +43,6 @@ const projects = [
       'Developed a Study Buddy matcher using a weighted similarity matrix to recommend students by shared interests and percentage match score.',
     ],
     tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Supabase', 'PostgreSQL', 'Realtime', 'WebSockets'],
-  },
-  {
-    title: 'Portfolio Website',
-    description:
-      'Developed a responsive React portfolio website to showcase technical skills, education, and software engineering projects, featuring a modern editorial design, intuitive navigation, and mobile-first responsiveness.',
-    tech: ['React', 'CSS', 'Vite'],
   },
 ]
 
@@ -321,7 +328,10 @@ function App() {
           <div className="project-list">
             {projects.map((project) => (
               <article className={project.featured ? 'project-card featured-project' : 'project-card'} key={project.title}>
-                <h3>{project.title}</h3>
+                <div className="project-heading">
+                  <h3>{project.title}</h3>
+                  {project.subtitle && <p className="project-subtitle">{project.subtitle}</p>}
+                </div>
                 <div className="project-details">
                   {project.bullets ? (
                     <ul className="project-bullets">
